@@ -583,6 +583,9 @@ class Game {
         }
         break;
       case 'ArrowUp':
+        e.preventDefault();
+        this.hardDrop();
+        break;
       case 'KeyX':
         e.preventDefault();
         this.tryRotate(1);
@@ -593,7 +596,7 @@ class Game {
         break;
       case 'Space':
         e.preventDefault();
-        this.hardDrop();
+        this.tryRotate(1);
         break;
       case 'KeyC':
         e.preventDefault();
