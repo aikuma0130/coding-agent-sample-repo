@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>テトリス</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>テトリス</h1>
+
+    <div id="game-area">
+      <div id="side-left">
+        <div class="info-box">
+          <p class="label">スコア</p>
+          <p id="score">0</p>
+        </div>
+        <div class="info-box">
+          <p class="label">レベル</p>
+          <p id="level">1</p>
+        </div>
+        <div class="info-box">
+          <p class="label">ライン</p>
+          <p id="lines">0</p>
+        </div>
+      </div>
+
+      <canvas id="board" width="300" height="600"></canvas>
+
+      <div id="side-right">
+        <div class="info-box">
+          <p class="label">NEXT</p>
+          <canvas id="next" width="120" height="120"></canvas>
+        </div>
+        <div class="info-box">
+          <p class="label">HOLD</p>
+          <canvas id="hold" width="120" height="120"></canvas>
+        </div>
+      </div>
+
+      <div id="overlay" class="hidden">
+        <div id="overlay-content">
+          <p id="overlay-message"></p>
+          <button id="start-btn">スタート</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="key-guide">
+      <span>← → : 移動</span>
+      <span>↑ / X : 右回転</span>
+      <span>Z : 左回転</span>
+      <span>↓ : ソフトドロップ</span>
+      <span>Space : ハードドロップ</span>
+      <span>C : ホールド</span>
+      <span>P : 一時停止</span>
+    </div>
+  </div>
+
+  <script src="tetris.js"></script>
+</body>
+</html>
