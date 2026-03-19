@@ -574,13 +574,7 @@ class Game {
         break;
       case 'ArrowDown':
         e.preventDefault();
-        if (!this.board.collides(this.current, 0, 1)) {
-          this.current.y++;
-          this.score += 1;
-          this.updateUI();
-          this._dropCounter = 0;
-          this.checkGround();
-        }
+        this.hardDrop();
         break;
       case 'ArrowUp':
       case 'KeyX':
@@ -593,7 +587,13 @@ class Game {
         break;
       case 'Space':
         e.preventDefault();
-        this.hardDrop();
+        if (!this.board.collides(this.current, 0, 1)) {
+          this.current.y++;
+          this.score += 1;
+          this.updateUI();
+          this._dropCounter = 0;
+          this.checkGround();
+        }
         break;
       case 'KeyC':
         e.preventDefault();
