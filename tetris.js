@@ -609,6 +609,28 @@ class Game {
 // ---------------------------------------------------------------------------
 // Init
 // ---------------------------------------------------------------------------
-window.addEventListener('DOMContentLoaded', () => {
-  new Game();
-});
+if (typeof window !== 'undefined') {
+  window.addEventListener('DOMContentLoaded', () => {
+    new Game();
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Exports (for testing in Node.js)
+// ---------------------------------------------------------------------------
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    COLS,
+    ROWS,
+    BLOCK,
+    COLORS,
+    TETROMINOES,
+    KICKS,
+    KICKS_I,
+    LINE_POINTS,
+    dropInterval,
+    Bag,
+    Piece,
+    Board,
+  };
+}
