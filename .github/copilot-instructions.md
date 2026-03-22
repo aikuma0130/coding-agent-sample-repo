@@ -1,3 +1,1 @@
-# Copilot Instructions
-
 回答はすべて日本語で行うこと。
