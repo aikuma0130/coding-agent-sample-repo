@@ -11,6 +11,7 @@
 3. [ツール・エコシステム連携](#3-ツールエコシステム連携)
 4. [セキュリティ・品質管理機能](#4-セキュリティ品質管理機能)
 5. [制限事項とベストプラクティス](#5-制限事項とベストプラクティス)
+6. [参考リンク](#6-参考リンク)
 
 ---
 
@@ -20,6 +21,8 @@
 
 GitHub Copilot Coding Agent は、GitHub Issues の要件に基づいて自動的にコード変更を実装する AI エージェントです。従来の Copilot Chat のような対話型ツールと異なり、複雑なコード変更をエンドツーエンドで自動実行し、Pull Request として提出する完全自動化されたシステムです。要件分析→コード検索→ファイル修正→テストといった一連の開発業務を自動で遂行します。
 
+> 📖 ソース: [About GitHub Copilot coding agent](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent)
+
 ### 1.2 動作フロー
 
 1. **Issue のアサイン**: GitHub Issue がエージェントにアサインされると、エージェントが要件を解析
@@ -28,6 +31,8 @@ GitHub Copilot Coding Agent は、GitHub Issues の要件に基づいて自動�
 4. **PR 作成**: 変更内容を整理して Pull Request を自動作成し、開発者のレビューを待つ状態に
 
 全プロセスはセキュアで隔離された環境で実行されるため、本体リポジトリには直接影響を与えません。
+
+> 📖 ソース: [GitHub Copilot coding agent](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent) | [Coding Agent 101 (GitHub Blog)](https://github.blog/ai-and-ml/github-copilot/github-copilot-coding-agent-101-getting-started-with-agentic-workflows-on-github/)
 
 ### 1.3 Copilot Chat / Copilot Edits との違い
 
@@ -48,6 +53,8 @@ OpenAI の大規模言語モデル（Claude、GPT-4 系等）をベースに構�
 - **ファイルシステム制限**: プロジェクトディレクトリに限定されたアクセス
 - **一時環境**: 使用後に完全に廃棄され、状態は保持されない
 - **リソース制限**: 実行時間やリソース使用量に上限が設定
+
+> 📖 ソース: [Customizing the development environment for Copilot coding agent](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-environment) | [Firecracker MicroVM](https://firecracker-microvm.github.io/)
 
 ---
 
@@ -97,6 +104,8 @@ OpenAI の大規模言語モデル（Claude、GPT-4 系等）をベースに構�
 - アーキテクチャ全体の再設計
 - 曖昧な要件の解釈
 
+> 📖 ソース: [Coding Agent 101 (GitHub Blog)](https://github.blog/ai-and-ml/github-copilot/github-copilot-coding-agent-101-getting-started-with-agentic-workflows-on-github/) | [Best practices for using GitHub Copilot](https://docs.github.com/en/copilot/get-started/best-practices)
+
 ---
 
 ## 3. ツール・エコシステム連携
@@ -130,6 +139,8 @@ GitHub の各種リソースに MCP (Model Context Protocol) Server 経由でア
 - **Secret Scanning**: シークレットスキャンアラートの一覧・詳細取得
 - **Commits / Tags / Branches / Releases**: リポジトリの各種リソースへのアクセス
 
+> 📖 ソース: [Model Context Protocol 公式サイト](https://modelcontextprotocol.io) | [GitHub MCP Server 実践ガイド (GitHub Blog)](https://github.blog/ai-and-ml/generative-ai/a-practical-guide-on-how-to-use-the-github-mcp-server/) | [Extending Copilot Chat with MCP](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp)
+
 ### 3.3 カスタムエージェント
 
 `.github/agents/` ディレクトリにカスタムエージェントを定義可能。特定の機能領域（フロントエンド、バックエンド、インフラ等）に特化した Agent を複数運用でき、`task` ツール経由で呼び出すことができます。
@@ -137,6 +148,8 @@ GitHub の各種リソースに MCP (Model Context Protocol) Server 経由でア
 ### 3.4 copilot-instructions.md によるカスタマイズ
 
 `.github/copilot-instructions.md` にプロジェクト固有のルールを記述することで、エージェントの動作をカスタマイズ可能。命名規則、アーキテクチャパターン、開発ポリシーなどを記載できます。
+
+> 📖 ソース: [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions) | [Copilot coding agent now supports .instructions.md (Changelog)](https://github.blog/changelog/2025-07-23-github-copilot-coding-agent-now-supports-instructions-md-custom-instructions/) | [Agent-specific instructions (Changelog)](https://github.blog/changelog/2025-11-12-copilot-code-review-and-coding-agent-now-support-agent-specific-instructions/)
 
 ### 3.5 対応プログラミング言語・フレームワーク
 
@@ -164,6 +177,8 @@ GitHub の各種リソースに MCP (Model Context Protocol) Server 経由でア
 
 `codeql_checker` ツールにより、コード変更後の自動セキュリティチェックを実行します。SQLインジェクション、XSS、認証バイパスなどの脆弱性を静的解析で検出し、検出されたアラートは修正するか、偽陽性として判断して無視するかをエージェントが判断します。
 
+> 📖 ソース: [About code scanning with CodeQL](https://docs.github.com/en/code-security/concepts/code-scanning/codeql/about-code-scanning-with-codeql) | [CodeQL Documentation](https://codeql.github.com/docs/)
+
 ### 4.2 コードレビュー機能
 
 `code_review` ツールにより、PR 提出前に自動的にコード品質をレビューします。セキュリティベストプラクティス、パフォーマンス問題、よくあるバグパターンを検出して提案します。code_review → codeql_checker の順で実行するのが標準フローです。
@@ -171,6 +186,8 @@ GitHub の各種リソースに MCP (Model Context Protocol) Server 経由でア
 ### 4.3 依存関係の脆弱性チェック
 
 `gh-advisory-database` ツールにより、新しい依存関係を追加する前に GitHub Advisory Database で脆弱性をチェックします。npm、pip、go、maven、rust 等の主要エコシステムに対応しています。
+
+> 📖 ソース: [About the GitHub Advisory Database](https://docs.github.com/en/code-security/concepts/vulnerability-reporting-and-management/about-the-github-advisory-database) | [GitHub Advisory Database](https://github.com/advisories)
 
 ### 4.4 サンドボックス環境によるセキュリティ
 
@@ -182,6 +199,8 @@ GitHub の各種リソースに MCP (Model Context Protocol) Server 経由でア
 
 - エージェントは秘密情報（APIキー、パスワード、トークン等）をソースコードにコミットすることが禁止されている
 - Secret Scanning のアラートにもアクセス可能で、既知の漏洩パターンを検出
+
+> 📖 ソース: [About secret scanning](https://docs.github.com/en/code-security/concepts/secret-security/about-secret-scanning)
 
 ### 4.6 権限モデル
 
@@ -213,11 +232,15 @@ GitHub の各種リソースに MCP (Model Context Protocol) Server 経由でア
 - **期待される出力の例示**: 関数シグネチャやファイル構成の例を示すと精度が向上
 - **スコープの適切な設定**: 1 Issue = 1 機能完成の粒度がベスト。複数の独立タスクの混在は非推奨
 
+> 📖 ソース: [Best practices for using GitHub Copilot](https://docs.github.com/en/copilot/get-started/best-practices) | [Getting Started with Copilot Coding Agent](https://ghsioux.github.io/2025/07/15/getting-started-with-copilot-coding-agent)
+
 ### 5.3 copilot-instructions.md の活用法
 
 - プロジェクト全体のコーディング規約（命名規則、アーキテクチャパターン等）を記述
 - フレームワーク選択、テスト方針、ログ形式、エラーハンドリング方針などのドメイン固有ルールを記載
 - 非推奨パターンは明示的に「使用禁止」と記載
+
+> 📖 ソース: [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions)
 
 ### 5.4 カスタムエージェントの活用法
 
@@ -250,3 +273,49 @@ GitHub の各種リソースに MCP (Model Context Protocol) Server 経由でア
 GitHub Copilot Coding Agent は、Issue ベースの自動コード実装を実現する強力なツールです。サンドボックス環境でのセキュアな実行、豊富なツールセット、CI/CD との連携により、開発プロセスを大幅に効率化できます。ただし、コンテキストの制限やドメイン知識の不足といった制約があるため、人間の開発者による適切な監督とレビューが不可欠です。
 
 効果的に活用するためには、明確な Issue の記述、`copilot-instructions.md` によるプロジェクトルールの明示、`store_memory` による知識の蓄積が重要です。
+
+---
+
+## 6. 参考リンク
+
+### 公式ドキュメント
+
+| リソース | URL |
+|----------|-----|
+| GitHub Copilot ドキュメント | https://docs.github.com/en/copilot |
+| About GitHub Copilot coding agent | https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent |
+| GitHub Copilot coding agent（使い方） | https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent |
+| エージェント環境のカスタマイズ | https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-environment |
+| カスタム指示の追加 | https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions |
+| GitHub Copilot ベストプラクティス | https://docs.github.com/en/copilot/get-started/best-practices |
+| CodeQL によるコードスキャン | https://docs.github.com/en/code-security/concepts/code-scanning/codeql/about-code-scanning-with-codeql |
+| CodeQL ドキュメント | https://codeql.github.com/docs/ |
+| GitHub Advisory Database | https://docs.github.com/en/code-security/concepts/vulnerability-reporting-and-management/about-the-github-advisory-database |
+| Secret Scanning | https://docs.github.com/en/code-security/concepts/secret-security/about-secret-scanning |
+| MCP で Copilot Chat を拡張 | https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp |
+
+### GitHub Blog / Changelog
+
+| リソース | URL |
+|----------|-----|
+| Coding Agent 101: エージェントワークフロー入門 | https://github.blog/ai-and-ml/github-copilot/github-copilot-coding-agent-101-getting-started-with-agentic-workflows-on-github/ |
+| GitHub MCP Server 実践ガイド | https://github.blog/ai-and-ml/generative-ai/a-practical-guide-on-how-to-use-the-github-mcp-server/ |
+| .instructions.md カスタム指示対応 | https://github.blog/changelog/2025-07-23-github-copilot-coding-agent-now-supports-instructions-md-custom-instructions/ |
+| エージェント固有の指示対応 | https://github.blog/changelog/2025-11-12-copilot-code-review-and-coding-agent-now-support-agent-specific-instructions/ |
+
+### 関連技術
+
+| リソース | URL |
+|----------|-----|
+| Firecracker MicroVM | https://firecracker-microvm.github.io/ |
+| Model Context Protocol (MCP) | https://modelcontextprotocol.io |
+| GitHub MCP Server リポジトリ | https://github.com/modelcontextprotocol |
+| GitHub Copilot Agents ページ | https://github.com/features/copilot/agents |
+
+### コミュニティ記事
+
+| リソース | URL |
+|----------|-----|
+| Copilot Coding Agent 入門ガイド | https://ghsioux.github.io/2025/07/15/getting-started-with-copilot-coding-agent |
+| Copilot Coding Agent の活用例ウォークスルー | https://devopsjournal.io/blog/2025/12/20/Copilot-Agent-example |
+| DevOps 自動化での Copilot Coding Agent 活用 | https://dev.to/pwd9000/using-github-copilot-coding-agent-for-devops-automation-3f43 |
